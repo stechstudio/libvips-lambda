@@ -5,7 +5,7 @@ libvips is licensed under the LGPL 2.1+.
 
 We use libvips for image manipulation, primarily tiling image pyramids for blueprints and other construction industry artifacts, which results in about seven thousand vips executions a day for the past several years. We have long wanted to move that processing to AWS Lambda, and were hung up on getting a vips executable into AWS.
 
-In the fall of 2016, I had a good chat with @jcupitt and @lovell about the issue in jcupitt/libvips#492 and @lovell pointed out that they were building vips libraries for the Node.js module [Sharp](https://github.com/lovell/sharp). Sharp builds the shared libraries that have a single runtime dependency of `glibc v2.13+` and the latest Amazon Linux is further along than that.
+In the fall of 2016, I had a good chat with [@jcupitt](https://github.com/jcupitt) and [@lovell](https://github.com/lovell) about the issue in [jcupitt/libvips#492](https://github.com/jcupitt/libvips/issues/492) and @lovell pointed out that they were building vips libraries for the Node.js module [Sharp](https://github.com/lovell/sharp). Sharp builds the shared libraries that have a single runtime dependency of `glibc v2.13+` and the latest Amazon Linux is further along than that.
 
 If we were looking for a Node.js solution in AWS Lambda, we could have simply used the sharp module. If you are using Node.js, you should probably stop here and just go use Sharp. However, we required an executable that we could call directly. So I adapted the [sharp vips build tools](https://github.com/lovell/sharp/tree/master/packaging) to allow us to get what we are after, an executable.
 
@@ -17,7 +17,7 @@ Over time, I expect we will diverge from the Sharp code base significantly, but 
 
 We keep some pre-baked tarballs on the release page:
 
-https://github.com/stechstudio/libvips-lambda
+https://github.com/stechstudio/libvips-lambda/releases
 
 You can simply untar that and skip the entire build process if you like.
 
@@ -37,9 +37,9 @@ Creating a [Lambda Deployment Package](http://docs.aws.amazon.com/lambda/latest/
 
 Go about creating your Deployment Package as normal, and extract the libvips tarfile into your base directory. This will result in three new directories if they didn't previously exist:
 
-  ./bin
-  ./lib
-  ./include
+      ./bin
+      ./lib
+      ./include
 
 You will find vips at `./bin/vips` along with all the other executables we created. Adding this to your Deployment Package will add about 7.5M to the package size.
 
