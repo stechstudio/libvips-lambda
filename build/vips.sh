@@ -46,8 +46,11 @@ build poppler
 
 # Now we can build vips
 build vips
-build php
-build phpvips
+
+if [[ "${BUILD_PHP}" == "YES" ]]; then
+    build php
+    build phpvips
+fi
 
 # Remove the old C++ bindings
 cd ${TARGET}/include
@@ -58,7 +61,5 @@ rm -rf .libs *.la libvipsCC*
 # Create JSON file of version numbers
 toJson
 
-
 # Create .tar.gz
-# tar czf /packaging/libvips-${VERSION_VIPS}-lambda.tar.gz include lib bin
-# advdef --recompress --shrink-insane /packaging/libvips-${VERSION_VIPS}-lambda.tar.gz
+packageVips
