@@ -10,6 +10,10 @@ if [ -z ${VERSION_PHP+x} ]; then
     export VERSION_PHP=7.1.6
 fi
 
+if [ -z ${BUILD_PHP+x} ]; then
+    export BUILD_PHP=NO
+fi
+
 # Dependency version numbers
 export VERSION_ZLIB=1.2.11
 export VERSION_FFI=3.2.1
