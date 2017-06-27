@@ -27,20 +27,58 @@ The process depends on [Docker](https://docs.docker.com/engine/installation/) be
 
 Clone this repository and run:
 
-    $ ./build.sh
+    $ ./build-vips.sh 8.5.6
 
-When all is said and done you should have something like `libvips-8.5.4-linux-x64.tar.gz` in your working directory.
+When all is said and done you should have something like `dist/libvips-8.5.6-linux-x64.tar.gz` in your working directory.
+
+
+# Building libvips with php-vips-ext for AWS Lambda
+
+The process depends on [Docker](https://docs.docker.com/engine/installation/) being installed.
+
+It is important to note that for running in Lambda we need to ensure that PHP is compiled against the exact same
+libraries that we use for VIPS and the subsequent compilation of the PECL extension needs to build against those as well. 
+Simply using PECL will not work because PECL gets easily confused with other system libraries that we are overriding.
+
+Clone this repository and run:
+
+    $ ./build-phpvips.sh 8.5.6 7.1.6 1.0.7
+
+When all is said and done you should have something like `dist/vips-8.5.6_php-7.1.6_ext-php-1.0.7-lambda.tar.gz` in your working directory.
 
 # Using libvips in an AWS Lambda Package
 
 Creating a [Lambda Deployment Package](http://docs.aws.amazon.com/lambda/latest/dg/lambda-python-how-to-create-deployment-package.html) is beyond the scope of this read me. However, you need to be familiar with the process.
 
-Go about creating your Deployment Package as normal, and extract the libvips tarfile into your base directory. This will result in three new directories if they didn't previously exist:
+Go about creating your Deployment Package as normal, and extract the libvips tarfile into your base directory. This will 
+result in new directories (assumes PHP build )if they didn't previously exist:
 
-      ./bin
-      ./lib
-      ./include
+      ./bin         Our Binaries
+      ./etc         Pear configuration
+      ./include     Headers for everything we built
+      ./lib         All the Shared Libraries
+      ./modules     PHP Module Config Dir
 
-You will find vips at `./bin/vips` along with all the other executables we created. Adding this to your Deployment Package will add about 7.5M to the package size.
+You will find vips at `./bin/vips` along with all the other executables we created. If you were to add everything to your
+lambda package it would be about 30M zipped and 86M on disk. However, you probably only want one or two of the executables
+in which case you should cherry pick only the executables your lambda function needs. The entire `./bin` directory is about 
+45MB on disk.
 
-In your code you can reference `/var/task/bin/vips` and you will need to ensure you customize the Lambda Function Environment Variable `LD_LIBRARY_PATH=/var/task/lib` from there you should be good to go!
+There is probably no reason to deploy the `./include` (15M on disk) to lambda at all. It is only packaged to allow additional
+compilation if desired.
+
+The `./lib` (27M on disk) directory is the big one. Just assume you need every file in the root directory for `vips` or `php` to work
+properly at all. However, there are a number of subdirectories that you don't need at all, and you can effectively delete
+all of them prior to lambda deployment to save a little space.
+
+Note that there are a large number of symlinks in the `./lib` directory and it is important that those be maintained when 
+creating your lambda package. Not all operating systems nor zipping programs properly handle the symlinks. You are warned.
+
+In your code you can reference `/var/task/bin/vips` and you will need to ensure you customize the Lambda Function 
+Environment Variables:
+```bash
+LD_LIBRARY_PATH=${LAMBDA_TASK_ROOT}/lib:LD_LIBRARY_PATH
+PATH=${LAMBDA_TASK_ROOT}/bin:${LAMBDA_TASK_ROOT}:${PATH}
+ ```
+
+This will ensure our libraries and binaries get preference.
