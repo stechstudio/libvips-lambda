@@ -46,8 +46,8 @@ build () {
 }
 
 toJson () {
-    echo "{\
-        \"xml\": \"${VERSION_XML2}\",
+
+    VIPSVERS="\"xml\": \"${VERSION_XML2}\",
         \"cairo\": \"${VERSION_CAIRO}\",
         \"croco\": \"${VERSION_CROCO}\",
         \"exif\": \"${VERSION_EXIF}\",
@@ -73,10 +73,35 @@ toJson () {
         \"zlib\": \"${VERSION_ZLIB}\",
         \"curl\": \"${VERSION_CURL}\",
         \"poppler\": \"${VERSION_POPPLER}\",
-        \"openjpeg\": \"${VERSION_OPENJPEG}\",
-        \"php\": \"${VERSION_PHP}\",
-        \"php-vips-ext\": \"${VERSION_PHPVIPS}\",
-}" | jq --sort-keys '.' > ${TARGET}/lib/versions.json
+        \"openjpeg\": \"${VERSION_OPENJPEG}\""
+
+    if [[ "${BUILD_PHP}" == "YES" ]]; then
+        VIPSVERS="${VIPSVERS},
+         \"php\": \"${VERSION_PHP}\",
+        \"php-vips-ext\": \"${VERSION_PHPVIPS}\""
+    fi
+
+    echo "{ ${VIPSVERS} }" | jq --sort-keys '.' > ${TARGET}/lib/versions.json
+}
+
+packageVips () {
+    echo "-------------------------------------------------------------------------------------------------"
+    echo "|   Begin Building ${1}"
+    echo "| "
+
+    mkdir -p /packaging/dist
+    cd ${TARGET}
+    PACKAGE=/packaging/dist/libvips-${VERSION_VIPS}-lambda.tar.gz
+
+    if [[ "${BUILD_PHP}" == "YES" ]]; then
+        PACKAGE=/packaging/dist/vips-${VERSION_VIPS}_php-${VERSION_PHP}_ext-php-${VERSION_PHPVIPS}-lambda.tar.gz
+    fi
+
+    echo "|   ${PACKAGE} "
+    echo "-------------------------------------------------------------------------------------------------"
+    [[ -f "${PACKAGE}" ]] && rm "${PACKAGE}"
+    tar czf ${PACKAGE} include lib bin modules etc
+    advdef --recompress --shrink-insane ${PACKAGE}
 }
 
 pushd `dirname $0` > /dev/null
@@ -84,4 +109,7 @@ export BUILDPATH=`pwd`
 popd > /dev/null
 
 export -f fetchSource
+export -f build
 export -f start
+export -f packageVips
+export -f toJson
