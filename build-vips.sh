@@ -18,6 +18,6 @@ if ! type docker >/dev/null; then
   exit 1
 fi
 
-echo "Building vips..."
-docker build -t vips-dev-lambda amazonlinux
-docker run --rm -e "VERSION_VIPS=${VERSION_VIPS}" -v $PWD:/packaging vips-dev-lambda sh -c "/packaging/build/vips.sh"
+echo "Building ..."
+docker build -t dev-lambda amazonlinux
+docker run --rm -e "VERSION_VIPS=${VERSION_VIPS}" -v $PWD:/packaging dev-lambda sh -c "/packaging/build/vips.sh"
