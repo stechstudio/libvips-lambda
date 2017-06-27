@@ -19,5 +19,5 @@ if ! type docker >/dev/null; then
 fi
 
 echo "Building vips..."
-docker build -t vips-dev-linux-x64 linux-x64
-docker run --rm -e "VERSION_VIPS=${VERSION_VIPS}" -v $PWD:/packaging vips-dev-linux-x64 sh -c "/packaging/build/vips.sh"
+docker build -t vips-dev-lambda amazonlinux
+docker run --rm -e "VERSION_VIPS=${VERSION_VIPS}" -v $PWD:/packaging vips-dev-lambda sh -c "/packaging/build/vips.sh"

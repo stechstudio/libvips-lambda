@@ -1,0 +1,232 @@
+[1;30m=======================================
+[1;31m Command Prompt
+[1;30m=======================================
+[1;30m([0;36mDay/Date  [0;34mTime/Secs [1;30m)-([0;35mCPU[1;30m:[0;35mJobs[1;30m:[0;35mConnect[1;30m)-([0;31muser[@SSH] [1;30m:[0;33m current directory  [1;30m)-([0;32mSize:Count[1;30m)
+[1;30m([0;36mMon Jan-1 [0;34m12:34:56pm[1;30m)-([0;35mCPU 1.2%:3:Net 4[1;30m)-([0;31mroot@server[1;30m:[0;33m/current/folder/path[1;30m)-([0;32m12M:34[1;30m)
+[0;32m> [0;37m_
+[0mPrompt [0;31m> Red[0m if root or [0;32m> Green[0m if normal user
+[0m
+[0mError codes with descriptions will be shown before (on top of) the prompt if any error occurs:
+[1;30m([1;31mERROR[1;30m)-([0;31mExit Code [1;31m130[1;30m)-([0;31mScript terminated by Control-C[1;30m)
+[0m
+[1;30m=======================================
+[1;31m Console Shortcuts
+[1;30m=======================================
+[0;33mCTRL-C[1;30m - [0;34mHalts the current command
+[0;33mCTRL-Z[1;30m - [0;34mStops the current command (resume with fg in the foreground and bg in the background)
+[0;33mCTRL-D[1;30m - [0;34mLog out
+[0;33mCTRL-K[1;30m - [0;34mDeletes the line from the position of the cursor to the end of the line
+[0;33mCTRL-U[1;30m - [0;34mErases the entire line
+[0;33mCTRL-W[1;30m - [0;34mErases one word in the current line
+
+[0;33m!![1;30m - [0;34mRepeats the last command
+[0;33m!$[1;30m - [0;34mRepeats only the argument from the last command
+[0;33m^[0;36mfind[0;33m^[0;36mreplace[1;30m - [0;34mRepeats the last command but replaces text
+[0;33mhistory[1;30m - [0;34mShows your command line history
+[0;33m![0;36m123[1;30m - [0;34mRuns the command associated with the numbers listed in the history above
+[0;33mmv [0;36m/path/to/file[0;33m.{[0;36mtxt[0;33m,[0;36mxml[0;33m}[1;30m - [0;34mBrackets repeat the command with comma delimited changes
+[0;33m\[1;30m - [0;34mUse at the end of a line to continue a multi-line command.
+
+[0;32mTo stack multiple commands on one line:
+[0;33m&&[1;30m - [0;34mCommands separated by a double ampersand means AND and runs multiple commands synchronously with each one running only if the last did not fail.
+[0;33m&[1;30m - [0;34mA single ampersand runs multiple commands asynchronously (at the same time).
+
+[1;30m=======================================
+[1;31m Information
+[1;30m=======================================
+[0;33mhlp[1;30m - [0;34mShow this help information
+[0;33mda[1;30m - [0;34mShow the date
+[0;33mver[1;30m - [0;34mShow the current version of the operating system
+[0;33mcheckcommand[1;30m - [0;34mShow if a command is aliased, a file, or a built-in command
+[0;33mcpu[1;30m - [0;34mShows the CPU usage
+[0;33mtopcpu[1;30m - [0;34mShow the top 10 CPU processes
+[0;33mlogs[1;30m - [0;34mShow all logs in /var/log
+[0;33mapachelog[1;30m - [0;34mView Apache web server logs [0;36m(requires multitail)
+[0;33mrot13[1;30m - [0;34mRot13 conversion
+
+[1;30m=======================================
+[1;31m Searching
+[1;30m=======================================
+[0;33mh[1;30m - [0;34mSearch command line history [0;36m(also CTRL-S and CTRL-R)
+[0;33mp[1;30m - [0;34mSearch running processes
+[0;33mf[1;30m - [0;34mSearch filenames in the current folder
+[0;33mftext[1;30m - [0;34mSearches for text in all files in the current folder
+
+[1;30m=======================================
+[1;31m Folders
+[1;30m=======================================
+[0;33mla[1;30m - [0;34mDirectory listing: show hidden files
+[0;33mls[1;30m - [0;34mDirectory listing: add colors and file type extensions
+[0;33mlx[1;30m - [0;34mDirectory listing: sort by extension
+[0;33mlk[1;30m - [0;34mDirectory listing: sort by size
+[0;33mlc[1;30m - [0;34mDirectory listing: sort by change time
+[0;33mlu[1;30m - [0;34mDirectory listing: sort by access time
+[0;33mlr[1;30m - [0;34mDirectory listing: recursive ls
+[0;33mlt[1;30m - [0;34mDirectory listing: sort by date
+[0;33mlm[1;30m - [0;34mDirectory listing: pipe through 'more'
+[0;33mlw[1;30m - [0;34mDirectory listing: wide listing format
+[0;33mll[1;30m - [0;34mDirectory listing: long listing format
+[0;33mlabc[1;30m - [0;34mDirectory listing: alphabetical sort
+[0;33mlf[1;30m - [0;34mDirectory listing: files only
+[0;33mldir[1;30m - [0;34mDirectory listing: directories only
+
+[0;33m..[1;30m - [0;34mgo back 1 folder
+[0;33m...[1;30m - [0;34mgo back 2 folders
+[0;33m....[1;30m - [0;34mgo back 3 folders
+[0;33m.....[1;30m - [0;34mgo back 4 folders
+[0;33mup[1;30m - [0;34mgo up a specified number of folders
+[0;33mbd[1;30m - [0;34mchange into your previous folder [0;36m(also cd -)
+[0;33mcpp[1;30m - [0;34mCopy file with a progress bar
+[0;33mcpg[1;30m - [0;34mCopy and go to the directory
+[0;33mmvg[1;30m - [0;34mMove and go to the directory
+[0;33mmkdirg[1;30m - [0;34mCreate and go to the directory
+[0;33mrmd[1;30m - [0;34mRemove a directory, all sub folders, and files
+[0;33mpwd[1;30m - [0;34mShow the current directory [0;36m(not an alias)
+[0;33moldpwd[1;30m - [0;34mShow the previous directory [0;36m(not an alias)
+[0;33mpwdtail[1;30m - [0;34mReturns the last 2 fields of the working directory
+
+[0;33mcountfiles[1;30m - [0;34mCount all files (recursively) in the current folder
+[0;33mdiskspace[1;30m - [0;34mShow how disk space is being used
+[0;33mfolders[1;30m - [0;34mShow subfolders and disk space
+[0;33mfolderssort[1;30m - [0;34mShow subfolders sorted with disk space
+[0;33mtree[1;30m - [0;34mShow a folder and file tree
+[0;33mtreed[1;30m - [0;34mShow a folder tree
+[0;33mmountedinfo[1;30m - [0;34mShow mounted information
+
+[0;33mhome[1;30m - [0;34mgo to your home folder
+[0;33mweb[1;30m - [0;34mChange into Apache web folder
+
+[1;30m=======================================
+[1;31m File Permissions
+[1;30m=======================================
+[0;33m000[1;30m - [0;34mChange permissions to no read/write/execute
+[0;33m644[1;30m - [0;34mChange permissions to read only/write for owner
+[0;33m666[1;30m - [0;34mChange permissions to read only
+[0;33m755[1;30m - [0;34mChange permissions to read only and execute/write for owner
+[0;33m777[1;30m - [0;34mChange permissions to read, write, and execute
+[0;33mmx[1;30m - [0;34mmake files executable
+
+[1;30m=======================================
+[1;31m Archives
+[1;30m=======================================
+[0;33mextract[1;30m - [0;34mExtract any archive(s) [0;36m(also dtrx from http://brettcsmith.org)
+[0;33mmktar[1;30m - [0;34mCreate a tar file
+[0;33mmkbz2[1;30m - [0;34mCreated a bzip2 archive file
+[0;33mmkgz[1;30m - [0;34mCreate a gzip archive file
+[0;33muntar[1;30m - [0;34mExtract a tar file
+[0;33munbz2[1;30m - [0;34mExtract a bzip2 archive file
+[0;33mungz[1;30m - [0;34mExtract a gzip archive file
+
+[1;30m=======================================
+[1;31m Network
+[1;30m=======================================
+[0;33mnetinfo[1;30m - [0;34mShow current network information
+[0;33mwhatsmyip[1;30m - [0;34mInternal and external IP address lookup
+[0;33mipview[1;30m - [0;34mShow the number of connections to the web server
+[0;33mopenports[1;30m - [0;34mShow open ports
+
+[1;30m=======================================
+[1;31m Configuration
+[1;30m=======================================
+[0;33mebrc[1;30m - [0;34mEdit the .bashrc file
+[0;33mphpconfig[1;30m - [0;34mEdit the PHP configuration
+[0;33mapacheconfig[1;30m - [0;34mEdit Apache web server configuration
+[0;33mmysqlconfig[1;30m - [0;34mEdit MySQL database configuration
+
+[1;30m=======================================
+[1;31m Reboot
+[1;30m=======================================
+[0;33mrebootsafe[1;30m - [0;34mreboot safely
+[0;33mrebootforce[1;30m - [0;34mforce reboot
+
+[0;36m===============================================================================
+[0;36m===                      [0mAdditional Help Information:[0;36m                       ===
+[0;36m===============================================================================
+
+[1;30m=======================================
+[1;31m To Delete a Directory and All Contents
+[1;30m=======================================
+[0;33mrm -rf [0;34m[folder]
+
+[1;30m=======================================
+[1;31m To Check Memory Usage
+[1;30m=======================================
+[0;33mfree
+[0;33mhtop
+[0;33mtop
+
+[0;32mTo List Processes:
+[0;33mps aux | grep -i [0;34m[application]
+
+[0;32mTo Kill a Process:
+[0;33mkill -9 [0;34m[process_id] [0;36m(forced)
+[0;33mkill -15 [0;34m[process_id] [0;36m(graceful)
+
+[1;30m=======================================
+[1;31m Download a File
+[1;30m=======================================
+[0;33mwget [0;34mhttp://server.com/filename.ext
+
+[1;30m=======================================
+[1;31m Compile and Install From Source
+[1;30m=======================================
+[0;33m./configure [0;36m(may not have this)
+[0;33mmake
+[0;33mmake install
+[0;33mmake clean
+
+[1;30m=======================================
+[1;31m Replace Text in a File
+[1;30m=======================================
+[0;33msed -i 's/[0;34m[findtext][0;33m/[0;34m[replacetext][0;33m/g' [0;34m[filename]
+
+[1;30m=======================================
+[1;31m Find Out How Much Drive Space is Left
+[1;30m=======================================
+[0;33mdf -k
+
+[1;30m=======================================
+[1;31m Update and Run Clam AntiVirus
+[1;30m=======================================
+[0;33mfreshclam[1;30m - [0;34mUpdate clam definitions
+
+[0;33mclamscan -ir [0;34m/var/www/html/
+-OR-
+[0;33mclamscan --recursive=yes --infected --log=[0;34m/tmp/virus_scan.txt[0;33m --move=[0;34m/tmp/quarantine/[0;33m --scan-mail=yes --phishing-sigs=yes --phishing-scan-urls=yes [0;34m/var/www/html/
+-OR-
+[0;33mclamscan -ir / > [0;34m/tmp/virus_scan.txt
+
+[1;30m=======================================
+[1;31m View Network Connections
+[1;30m=======================================
+[0;33mnetstat -anpl | grep :80 | awk {'print $5'} | cut -d":" -f1 | sort | uniq -c | sort -n
+
+[1;30m=======================================
+[1;31m Start/Stop/Restart a service
+[1;30m=======================================
+[0;33m/etc/init.d/[0;34m[service][0;33m start
+[0;33m/etc/init.d/[0;34m[service][0;33m stop
+[0;33m/etc/init.d/[0;34m[service][0;33m restart
+
+[1;30m=======================================
+[1;31m Cron Job Locations
+[1;30m=======================================
+[0;33m/etc/cron.d
+[0;33m/etc/cron.daily
+[0;33m/etc/cron.hourly
+[0;33m/etc/cron.weekly
+[0;33m/etc/cron.monthly
+
+[0;32mThe cron log is found here:
+[0;33mnano /var/log/cron
+
+[1;30m=======================================
+[1;31m Startup Configuration
+[1;30m=======================================
+[0;33msudo nano /etc/fstab
+
+[1;30m=======================================
+[1;31m To Change System Security
+[1;30m=======================================
+[0;33msudo nano /etc/sysctl.conf
+[0m
