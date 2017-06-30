@@ -1,14 +1,23 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource gsf https://download.gnome.org/sources/libgsf/1.14/libgsf-${VERSION_GSF}.tar.xz
-if [ ! -f "Makefile" ]; then
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking
+        --disable-dependency-tracking > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

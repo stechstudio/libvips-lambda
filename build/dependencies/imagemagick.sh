@@ -1,13 +1,16 @@
-#!/bin/sh
+#!/bin/sh \
 
 
-fetchSource xslt http://xmlsoft.org/sources/libxslt-${VERSION_XLST}.tar.gz
+fetchSource imagemagick ftp://ftp.osuosl.org/pub/blfs/conglomeration/ImageMagick/ImageMagick-${VERSION_IMAGEMAGICK}.tar.xz
 
 if [ ! -f "configured.sts" ]; then
     echo "\tConfiguring"
-    ./configure  \
+    ./configure \
         --prefix=${TARGET} \
-        --with-sysroot=${TARGET} \
+        --sysconfdir=${TARGET}/etc \
+        --enable-hdri     \
+        --with-gslib    \
+        --with-rsvg     \
         --disable-static > config.log
     touch configured.sts
 else

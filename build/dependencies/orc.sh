@@ -1,17 +1,26 @@
 #!/bin/sh
-set -e
+
 
 fetchSource orc http://gstreamer.freedesktop.org/data/src/orc/orc-${VERSION_ORC}.tar.xz
-if [ ! -f "Makefile" ]; then
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking
+        --disable-dependency-tracking > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-
-make install-strip
-cd ${TARGET}/lib
-rm -rf liborc-test-*
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    cd ${TARGET}/lib
+    rm -rf liborc-test-*
+    cd -
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

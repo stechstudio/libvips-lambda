@@ -1,16 +1,23 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource freetype http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/project/freetype/freetype2/${VERSION_FREETYPE}/freetype-${VERSION_FREETYPE}.tar.gz
 
-if [ ! -f "CONFIGURED" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
-        --disable-static
-    touch "CONFIGURED"
+        --disable-static > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
 
-make install
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

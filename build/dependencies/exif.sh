@@ -1,17 +1,24 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource exif http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/project/libexif/libexif/${VERSION_EXIF}/libexif-${VERSION_EXIF}.tar.bz2
 
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     autoreconf -fiv
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking
+        --disable-dependency-tracking > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

@@ -1,9 +1,10 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource fontconfig https://www.freedesktop.org/software/fontconfig/release/fontconfig-${VERSION_FONTCONFIG}.tar.bz2
 
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
@@ -11,9 +12,16 @@ if [ ! -f "Makefile" ]; then
         --disable-dependency-tracking \
         --with-expat-includes=${TARGET}/include \
         --with-expat-lib=${TARGET}/lib \
-        --sysconfdir=/var/task/etc
+        --sysconfdir=/var/task/etc > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
 
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

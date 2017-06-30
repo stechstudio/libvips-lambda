@@ -1,9 +1,10 @@
 #!/bin/sh
-set -e
+
 
 fetchSource gdkpixbuf https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-${VERSION_GDKPIXBUF}.tar.xz
 
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     touch gdk-pixbuf/loaders.cache
     LD_LIBRARY_PATH=${TARGET}/lib \
         ./configure  \
@@ -16,9 +17,15 @@ if [ ! -f "Makefile" ]; then
         --disable-gio-sniffing \
         --without-libtiff \
         --without-gdiplus \
-        --with-included-loaders=png,jpeg
+        --with-included-loaders=png,jpeg  > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

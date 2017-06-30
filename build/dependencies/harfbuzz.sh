@@ -1,14 +1,24 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource harfbuzz https://www.freedesktop.org/software/harfbuzz/release/harfbuzz-${VERSION_HARFBUZZ}.tar.bz2
-if [ ! -f "Makefile" ]; then
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
     --prefix=${TARGET} \
     --enable-shared \
     --disable-static \
-    --disable-dependency-tracking
+    --disable-dependency-tracking > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

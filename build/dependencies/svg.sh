@@ -1,8 +1,10 @@
 #!/bin/sh
-set -e
+
 
 fetchSource svg https://download.gnome.org/sources/librsvg/2.40/librsvg-${VERSION_SVG}.tar.xz
-if [ ! -f "Makefile" ]; then
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
@@ -10,8 +12,16 @@ if [ ! -f "Makefile" ]; then
         --disable-dependency-tracking \
         --disable-introspection \
         --disable-tools \
-        --disable-pixbuf-loader
+        --disable-pixbuf-loader > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

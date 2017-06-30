@@ -1,5 +1,5 @@
 #!/bin/sh
-set -e
+
 
 fetchSource matio https://github.com/tbeu/matio/releases/download/v${VERSION_MATIO}/matio-${VERSION_MATIO}.tar.gz
 if [ ! -f "Makefile" ]; then
@@ -9,6 +9,6 @@ if [ ! -f "Makefile" ]; then
          --enable-shared \
          --disable-static \
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
 make install-strip

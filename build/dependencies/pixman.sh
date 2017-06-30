@@ -1,16 +1,25 @@
 #!/bin/sh
-set -e
+
 
 fetchSource pixman http://cairographics.org/releases/pixman-${VERSION_PIXMAN}.tar.gz
-if [ ! -f "Makefile" ]; then
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
+        --with-sysroot=${TARGET} \
         --enable-shared \
         --disable-static \
         --disable-dependency-tracking \
-        --disable-libpng \
-        --disable-arm-iwmmxt
+        --disable-arm-iwmmxt > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

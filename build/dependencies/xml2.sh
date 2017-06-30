@@ -1,15 +1,29 @@
 #!/bin/sh
-set -e
+
 
 fetchSource xml2 http://xmlsoft.org/sources/libxml2-${VERSION_XML2}.tar.gz
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
+        --exec-prefix=${TARGET} \
+        --with-sysroot=${TARGET} \
         --enable-shared \
         --disable-static \
         --with-html \
-        --with-zlib=${TARGET}
+        --with-history \
+        --enable-ipv6=no \
+        --with-icu \
+        --with-zlib=${TARGET} > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install    > make.log
+    cp xml2-config /target/bin/xml2-config
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

@@ -1,9 +1,10 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource glib https://download.gnome.org/sources/glib/2.52/glib-${VERSION_GLIB}.tar.xz
 
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
 
     echo glib_cv_stack_grows=no >>glib.cache
     echo glib_cv_uscore=no >>glib.cache
@@ -14,10 +15,15 @@ if [ ! -f "Makefile" ]; then
         --enable-shared \
         --disable-static \
         --disable-dependency-tracking \
-        --with-pcre=internal \
-        --disable-libmount
+        --with-pcre=system  > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

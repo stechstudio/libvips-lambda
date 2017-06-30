@@ -1,9 +1,9 @@
 #!/bin/sh \
-set -e
 
 fetchSource cairo http://cairographics.org/releases/cairo-${VERSION_CAIRO}.tar.xz
 
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure \
         --prefix=${TARGET} \
         --enable-shared \
@@ -20,9 +20,16 @@ if [ ! -f "Makefile" ]; then
         --disable-ps \
         --disable-gobject \
         --disable-trace \
-        --disable-interpreter
+        --disable-interpreter > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
 
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

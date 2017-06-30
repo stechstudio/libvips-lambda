@@ -1,18 +1,26 @@
 #!/bin/sh \
-set -e
 
-fetchSource jpeg-turbo https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${VERSION_LIBTURBO}.tar.gz
 
-if [ ! -f "Makefile" ]; then
-    autoreconf -fiv
+fetchSource jpeg-turbo http://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-${VERSION_JPGTURBO}.tar.gz
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
         --disable-dependency-tracking \
         --with-jpeg8 \
-        --without-turbojpeg
+        --without-simd \
+        --without-turbojpeg  > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install-strip   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

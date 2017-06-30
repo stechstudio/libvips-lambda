@@ -1,20 +1,36 @@
 #!/bin/sh
-set -e
+
 
 fetchSource poppler https://poppler.freedesktop.org/poppler-${VERSION_POPPLER}.tar.xz
-if [ ! -f "Makefile" ]; then
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure  \
         --prefix=${TARGET}  \
-         --sysconfdir=/etc   \
-         --enable-shared \
-         --disable-static \
-         --enable-build-type=release \
-         --enable-cmyk               \
-         --enable-xpdf-headers       \
-         --disable-dependency-tracking \
-         --enable-libcurl \
-         --enable-libopenjpeg=openjpeg2
+        --disable-dependency-tracking \
+        --enable-shared \
+        --disable-static \
+        --enable-xpdf-headers  \
+        --enable-build-type=release \
+        --enable-cmyk \
+        --enable-libopenjpeg=openjpeg2 \
+        --disable-libnss \
+        --enable-libcurl \
+        --disable-poppler-qt4  \
+        --disable-poppler-qt5   \
+        --disable-poppler-cpp   \
+        --sysconfdir=${TARGET}/etc   \
+        --with-font-configuration=fontconfig > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
-make install-strip
+
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make
+    make install  > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

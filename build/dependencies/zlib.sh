@@ -1,16 +1,23 @@
 #!/bin/sh \
-set -e
+
 
 fetchSource zlib http://zlib.net/zlib-${VERSION_ZLIB}.tar.xz
 
-if [ ! -f "zlib.pc" ]; then
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
     ./configure \
         --prefix=${TARGET} \
-        --uname=linux
+        --uname=linux > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
 
-make install
-
-rm ${TARGET}/lib/libz.a
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install    > make.log
+    rm ${TARGET}/lib/libz.a
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi

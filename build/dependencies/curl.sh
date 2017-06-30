@@ -1,18 +1,28 @@
 #!/bin/sh \
-set -e
 
-fetchSource curl https://github.com/curl/curl/releases/download/curl-${VERSION_CURL//./_}/curl-${VERSION_CURL}.tar.gz
 
-if [ ! -f "CONFIGURED" ]; then
+fetchSource curl https://github.com/curl/curl/archive/curl-${VERSION_CURL//./_}.tar.gz
+
+if [ ! -f "configured.sts" ]; then
+    echo "\tConfiguring"
+    LD_LIBRARY_PATH=${TARGET}/lib \
+        ./buildconf
+
     LD_LIBRARY_PATH=${TARGET}/lib \
     ./configure \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking
-    touch "CONFIGURED"
+        --disable-dependency-tracking > config.log
+    touch configured.sts
 else
-    echo "Already Configured"
+    echo "\tAlready Configured"
 fi
 
-make install
+if [ ! -f "made.sts" ]; then
+    echo "\tBuilding"
+    make install   > make.log
+    touch made.sts
+else
+	echo "\tAlready Built"
+fi
