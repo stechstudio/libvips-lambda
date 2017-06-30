@@ -7,7 +7,7 @@ if [ $# -lt 3 ]; then
   echo "Build shared libraries for libvips and its dependencies via containers"
   echo "Then compile PHP against the same dependencies and build php-vips-ext"
   echo
-  echo "Please specify the libvips VERSION, e.g. 8.3.3"
+  echo "Please specify the libvips VERSION, e.g. 8.5.6"
   echo "Please specify the PHP VERSION, e.g. 7.1.6"
   echo "Please specify the php-vips-ext VERSION, e.g. 1.0.7"
   echo
