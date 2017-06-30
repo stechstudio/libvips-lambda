@@ -1,10 +1,10 @@
-#!/bin/sh \
-
+#!/bin/sh
 
 fetchSource jpeg-turbo http://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-${VERSION_JPGTURBO}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_JPGTURBO}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
@@ -12,15 +12,15 @@ if [ ! -f "configured.sts" ]; then
         --disable-dependency-tracking \
         --with-jpeg8 \
         --without-simd \
-        --without-turbojpeg  > config.log
+        --without-turbojpeg  >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install-strip   > make.log
+    printf "\tBuilding\n"
+    make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

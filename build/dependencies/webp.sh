@@ -1,10 +1,10 @@
 #!/bin/sh
 
-
 fetchSource webp http://downloads.webmproject.org/releases/webp/libwebp-${VERSION_WEBP}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_WEBP}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
@@ -13,16 +13,16 @@ if [ ! -f "configured.sts" ]; then
         --disable-neon \
         --enable-libwebpmux \
         --with-pngincludedir=${TARGET}/include \
-        --with-pnglibdir=${TARGET}/lib > config.log
+        --with-pnglibdir=${TARGET}/lib >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install-strip   > make.log
+    printf "\tBuilding\n"
+    make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

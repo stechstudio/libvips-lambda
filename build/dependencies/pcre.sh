@@ -1,9 +1,10 @@
 #!/bin/sh
 
-
 fetchSource pcre ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${VERSION_PCRE}.tar.bz2
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_PCRE}\""
+
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET} \
         --docdir=${TARGET}/share/doc/pcre-8.40 \
@@ -11,15 +12,15 @@ if [ ! -f "configured.sts" ]; then
         --enable-pcre16                   \
         --enable-pcre32                   \
         --enable-pcregrep-libz            \
-        --disable-static > config.log
+        --disable-static >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install    > make.log
+    printf "\tBuilding\n"
+    make install    >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

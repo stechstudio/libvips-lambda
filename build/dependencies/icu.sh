@@ -1,10 +1,11 @@
 #!/bin/sh
 
-
 fetchSource icu http://download.icu-project.org/files/icu4c/${VERSION_ICU}/icu4c-59_1-src.tgz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_ICU}\""
+
 cd source
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
@@ -12,15 +13,15 @@ if [ ! -f "configured.sts" ]; then
         --with-data-packaging=library \
         --enable-tests=no \
         --enable-samples=no \
-        --disable-static > config.log
+        --disable-static >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install   > make.log
+    printf "\tBuilding\n"
+    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

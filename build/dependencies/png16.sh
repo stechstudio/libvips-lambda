@@ -1,23 +1,23 @@
 #!/bin/sh
 
-
 fetchSource png16 http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/project/libpng/libpng16/${VERSION_PNG16}/libpng-${VERSION_PNG16}.tar.xz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_PNG16}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking > config.log
+        --disable-dependency-tracking >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install-strip    > make.log
+    printf "\tBuilding\n"
+    make install-strip    >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

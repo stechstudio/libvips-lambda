@@ -1,16 +1,16 @@
 #!/bin/sh
 
-
 fetchSource php https://github.com/php/php-src/archive/php-${VERSION_PHP}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_PHP}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
-    ./buildconf --force
+    printf "\tConfiguring\n"
+    ./buildconf --force >> ${BUILD_LOGS}/${DEP_NAME}.buildconfig.log 2>&1
     LD_LIBRARY_PATH=${TARGET}/lib \
         ./configure \
         --prefix=${TARGET} \
-        --with-config-file-path=/var/task/lib \
-        --with-config-file-scan-dir=/var/task/modules \
+        --with-config-file-path=${TARGET}/etc/php \
+        --with-config-file-scan-dir=${TARGET}/modules \
         \
         --enable-bcmath \
         --enable-calendar \
@@ -41,17 +41,18 @@ if [ ! -f "configured.sts" ]; then
         --with-libxml-dir=${TARGET}  \
         --with-webp-dir=${TARGET}  \
         --with-png-dir=${TARGET}  \
-        --with-jpeg-dir=${TARGET}    > config.log
+        --with-jpeg-dir=${TARGET}    >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make
-    make install
-    cp php.ini-production ${TARGET}/lib/php.ini
+    printf "\tBuilding\n"
+    make >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    make install >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    mkdir -p ${TARGET}/etc/php
+    cp php.ini-production ${TARGET}/etc/php/php.ini
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

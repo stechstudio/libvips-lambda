@@ -1,28 +1,28 @@
-#!/bin/sh \
-
+#!/bin/sh
 
 fetchSource curl https://github.com/curl/curl/archive/curl-${VERSION_CURL//./_}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_CURL}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     LD_LIBRARY_PATH=${TARGET}/lib \
-        ./buildconf
+        ./buildconf >> ${BUILD_LOGS}/${DEP_NAME}.buildconfig.log 2>&1
 
     LD_LIBRARY_PATH=${TARGET}/lib \
     ./configure \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking > config.log
+        --disable-dependency-tracking >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install   > make.log
+    printf "\tBuilding\n"
+    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

@@ -1,10 +1,10 @@
-#!/bin/sh \
-
+#!/bin/sh
 
 fetchSource glib https://download.gnome.org/sources/glib/2.52/glib-${VERSION_GLIB}.tar.xz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_GLIB}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
 
     echo glib_cv_stack_grows=no >>glib.cache
     echo glib_cv_uscore=no >>glib.cache
@@ -15,15 +15,15 @@ if [ ! -f "configured.sts" ]; then
         --enable-shared \
         --disable-static \
         --disable-dependency-tracking \
-        --with-pcre=system  > config.log
+        --with-pcre=system  >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install-strip   > make.log
+    printf "\tBuilding\n"
+    make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

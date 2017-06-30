@@ -1,10 +1,10 @@
 #!/bin/sh
 
-
 fetchSource poppler https://poppler.freedesktop.org/poppler-${VERSION_POPPLER}.tar.xz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_POPPLER}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET}  \
         --disable-dependency-tracking \
@@ -20,17 +20,17 @@ if [ ! -f "configured.sts" ]; then
         --disable-poppler-qt5   \
         --disable-poppler-cpp   \
         --sysconfdir=${TARGET}/etc   \
-        --with-font-configuration=fontconfig > config.log
+        --with-font-configuration=fontconfig >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make
-    make install  > make.log
+    printf "\tBuilding\n"
+    make >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    make install  >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi

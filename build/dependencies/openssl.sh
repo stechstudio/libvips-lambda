@@ -1,10 +1,10 @@
 #!/bin/sh
 
-
 fetchSource openssl https://openssl.org/source/openssl-${VERSION_OPENSSL}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_OPENSSL}\""
 
 if [ ! -f "configured.sts" ]; then
-    echo "\tConfiguring"
+    printf "\tConfiguring\n"
     mkdir -p ${TARGET}/etc/ssl
     sed -i 's# libcrypto.a##;s# libssl.a##' Makefile
     ./config  \
@@ -12,16 +12,16 @@ if [ ! -f "configured.sts" ]; then
          --openssldir=${TARGET}/etc/ssl \
          --libdir=lib          \
          shared                \
-         zlib-dynamic > config.log
+         zlib-dynamic >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
-    echo "\tAlready Configured"
+    printf "\tAlready Configured\n"
 fi
 if [ ! -f "made.sts" ]; then
-    echo "\tBuilding"
-    make install   > make.log
-    curl -o ${TARGET}/etc/ssl/certdata.txt https://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt
+    printf "\tBuilding\n"
+    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    curl -o ${TARGET}/etc/ssl/certdata.txt https://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
-	echo "\tAlready Built"
+	printf "\tAlready Built\n"
 fi
