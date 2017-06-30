@@ -1,7 +1,7 @@
 #!/bin/sh \
 set -e
 
-fetchSource jpeg https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${VERSION_JPEG}.tar.gz
+fetchSource jpeg-turbo https://github.com/libjpeg-turbo/libjpeg-turbo/archive/${VERSION_LIBTURBO}.tar.gz
 
 if [ ! -f "Makefile" ]; then
     autoreconf -fiv
