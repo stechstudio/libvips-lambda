@@ -1,12 +1,13 @@
 #!/bin/sh
-set -e
 
 # Standardize how we download and extract
 fetchSource () {
 
     url=$2
     build_dir=${DEPS}/$1
-    if [ ! -f ${build_dir}/build_downloaded ]; then
+
+    if [ ! -f ${build_dir}/downloaded.sts ]; then
+        echo "\tDownloading to ${build_dir}"
         mkdir -p ${build_dir}
 
         case "$url" in
@@ -27,9 +28,11 @@ fetchSource () {
                 exit 1
         esac
 
-        echo "curl -Ls ${url} | tar ${tar_args} ${build_dir} --strip-components=1"
+
         curl -Ls ${url} | tar ${tar_args} ${build_dir} --strip-components=1
-        touch ${build_dir}/build_downloaded
+        touch ${build_dir}/downloaded.sts
+    else
+        echo "\tAlready Downloaded"
     fi
     cd ${build_dir}
 }
