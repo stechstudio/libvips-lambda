@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 export DEPS="/deps"
 export TARGET="/target"
