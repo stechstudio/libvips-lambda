@@ -2,12 +2,12 @@
 
 # Standardize how we download and extract
 fetchSource () {
-
+    export DEP_NAME=$1
     url=$2
-    build_dir=${DEPS}/$1
+    build_dir=${DEPS}/${DEP_NAME}
 
     if [ ! -f ${build_dir}/downloaded.sts ]; then
-        echo "\tDownloading to ${build_dir}"
+        printf "\tDownloading to ${build_dir}\n"
         mkdir -p ${build_dir}
 
         case "$url" in
@@ -32,7 +32,7 @@ fetchSource () {
         curl -Ls ${url} | tar ${tar_args} ${build_dir} --strip-components=1
         touch ${build_dir}/downloaded.sts
     else
-        echo "\tAlready Downloaded"
+        printf "\tAlready Downloaded\n"
     fi
     cd ${build_dir}
 }
@@ -49,47 +49,12 @@ build () {
 }
 
 toJson () {
-
-    VIPSVERS="\"xml\": \"${VERSION_XML2}\",
-        \"cairo\": \"${VERSION_CAIRO}\",
-        \"croco\": \"${VERSION_CROCO}\",
-        \"exif\": \"${VERSION_EXIF}\",
-        \"expat\": \"${VERSION_EXPAT}\",
-        \"ffi\": \"${VERSION_FFI}\",
-        \"fontconfig\": \"${VERSION_FONTCONFIG}\",
-        \"freetype\": \"${VERSION_FREETYPE}\",
-        \"gdkpixbuf\": \"${VERSION_GDKPIXBUF}\",
-        \"gif\": \"${VERSION_GIF}\",
-        \"glib\": \"${VERSION_GLIB}\",
-        \"gsf\": \"${VERSION_GSF}\",
-        \"harfbuzz\": \"${VERSION_HARFBUZZ}\",
-        \"jpeg\": \"${VERSION_JPEG}\",
-        \"lcms\": \"${VERSION_LCMS2}-${VERSION_LCMS2_GIT_MASTER_SHA}\",
-        \"orc\": \"${VERSION_ORC}\",
-        \"pango\": \"${VERSION_PANGO}\",
-        \"pixman\": \"${VERSION_PIXMAN}\",
-        \"png\": \"${VERSION_PNG16}\",
-        \"svg\": \"${VERSION_SVG}\",
-        \"tiff\": \"${VERSION_TIFF}-${VERSION_TIFF_GIT_MASTER_SHA}\",
-        \"vips\": \"${VERSION_VIPS}\",
-        \"webp\": \"${VERSION_WEBP}\",
-        \"zlib\": \"${VERSION_ZLIB}\",
-        \"curl\": \"${VERSION_CURL}\",
-        \"poppler\": \"${VERSION_POPPLER}\",
-        \"openjpeg\": \"${VERSION_OPENJPEG}\""
-
-    if [[ "${BUILD_PHP}" == "YES" ]]; then
-        VIPSVERS="${VIPSVERS},
-         \"php\": \"${VERSION_PHP}\",
-        \"php-vips-ext\": \"${VERSION_PHPVIPS}\""
-    fi
-
-    echo "{ ${VIPSVERS} }" | jq --sort-keys '.' > ${TARGET}/lib/versions.json
+    echo "{ ${JSON_VERSIONS} }" | jq --sort-keys '.' > ${TARGET}/lib/versions.json
 }
 
 packageVips () {
     echo "-------------------------------------------------------------------------------------------------"
-    echo "|   Begin Building ${1}"
+    echo "|   Generating Package"
     echo "| "
 
     mkdir -p /packaging/dist
