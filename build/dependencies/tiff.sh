@@ -7,7 +7,7 @@ if [ ! -f "patched.sts" ]; then
     printf "\tPatching\n"
     # Apply patches for libtiff vulnerabilities reported since last version
     VERSION_TIFF_GIT_MASTER_SHA=$(curl -Ls https://api.github.com/repos/vadz/libtiff/git/refs/heads/master | jq -r '.object.sha' | head -c7)
-    curl -Ls https://github.com/vadz/libtiff/compare/Release-v${VERSION_TIFF//./-}...master.patch | patch -p1 -t || true
+    curl -Ls https://github.com/vadz/libtiff/compare/Release-v${VERSION_TIFF//./-}...master.patch | patch -p1 -t  >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1 || true
     touch patched.sts
 else
     printf "\tAlready Patched\n"

@@ -19,7 +19,7 @@ if [ ! -f "made.sts" ]; then
     make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     cd ${TARGET}/lib
     rm -rf liborc-test-*
-    cd -
+    cd -   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
 	printf "\tAlready Built\n"
