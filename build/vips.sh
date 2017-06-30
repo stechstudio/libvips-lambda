@@ -13,6 +13,8 @@ source "${BUILDPATH}/versions.sh"
 # Pull in our Functions
 source "${BUILDPATH}/functions.sh"
 
+rm -rf ${BUILD_LOGS}/*
+
 # Build All Dependencies
 
 ########################################################################################################################
@@ -426,7 +428,7 @@ if [[ "${BUILD_PHP}" == "YES" ]]; then
     #   - php
     # Depended on by:
     #   - none
-    build imagic
+    build imagick
 fi
 
 # Remove the old C++ bindings
