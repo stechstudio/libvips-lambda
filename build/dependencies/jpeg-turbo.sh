@@ -1,21 +1,18 @@
 #!/bin/sh
 
-fetchSource glib https://download.gnome.org/sources/glib/2.52/glib-${VERSION_GLIB}.tar.xz
-export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_GLIB}\""
+fetchSource jpeg-turbo http://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-${VERSION_JPGTURBO}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_JPGTURBO}\""
 
 if [ ! -f "configured.sts" ]; then
     printf "\tConfiguring\n"
-
-    echo glib_cv_stack_grows=no >>glib.cache
-    echo glib_cv_uscore=no >>glib.cache
-
-    ./configure \
-        --cache-file=glib.cache  \
+    ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
         --disable-dependency-tracking \
-        --with-pcre=system  >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
+        --with-jpeg8 \
+        --without-simd \
+        --without-turbojpeg  >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else
     printf "\tAlready Configured\n"

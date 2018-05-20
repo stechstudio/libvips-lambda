@@ -27,7 +27,7 @@ rm -rf ${BUILD_LOGS}/*
 # Dependencies:
 #   - None
 # Depended on by:
-build zlib
+## build zlib
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/pcre.html
 # Dependencies:
@@ -68,7 +68,7 @@ build nasm
 #   - None
 # Depended on by:
 #   - php
-build exif
+## build exif
 
 # http://www.linuxfromscratch.org/blfs/view/8.0/general/giflib.html
 # Dependencies:
@@ -81,14 +81,14 @@ build gif
 # Dependencies:
 #   - None
 # Depended on by:
-build orc
+## build orc
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/icu.html
 # Dependencies:
 #   - None
 # Depended on by:
 #   - HarfBuzz
-build icu
+## build icu
 
 # http://www.linuxfromscratch.org/blfs/view/7.5/general/expat.html
 # Dependencies:
@@ -102,14 +102,14 @@ build expat
 # Depended on by:
 #   - curl
 #   - php
-build openssl
+## build openssl
 
 # http://www.linuxfromscratch.org/blfs/view/cvs/general/fftw.html
 # Dependencies:
 #   - None
 # Depended on by:
 #   - vips
-build fftw3
+## build fftw3
 
 
 ########################################################################################################################
@@ -135,14 +135,14 @@ build xml2
 #   - pcre
 # Depended on by:
 #   - vips
-build swig
+## build swig
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/pixman.html
 # Dependencies:
 #   - LibPNG
 # Depended on by:
 #   - Cairo
-build pixman
+## build pixman
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/libjpeg.html
 # Dependencies:
@@ -171,7 +171,7 @@ build tiff
 #   - libxml2
 # Depended on by:
 #   - php
-build xlst
+## build xlst
 
 # http://www.linuxfromscratch.org/blfs/view/cvs/general/glib2.html
 # Dependencies:
@@ -192,7 +192,7 @@ build glib
 #   - libpng
 # Depended on by:
 #   - libsrvg
-build gdkpixbuf
+## build gdkpixbuf
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/libgsf.html
 # Dependencies:
@@ -219,7 +219,7 @@ build lcms2
 #   - libpng
 #   - giflib
 # Depended on by:
-build webp
+## build webp
 
 ########################################################################################################################
 #
@@ -232,7 +232,7 @@ build webp
 #   - None
 # Depended on by:
 #   - HarfBuzz
-build freetype
+## build freetype
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/fontconfig.html
 # Dependencies:
@@ -241,7 +241,7 @@ build freetype
 # Depended on by:
 #   - harfbuzz
 #   - Cairo
-build fontconfig
+## build fontconfig
 
 # http://www.linuxfromscratch.org/blfs/view/8.0/x/cairo.html
 # Dependencies:
@@ -254,14 +254,14 @@ build fontconfig
 #   - pango
 #   - poppler
 #   - ghostscript
-build cairo
+## build cairo
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/harfbuzz.html
 # Dependencies:
 #   - Freetype
 # Depended on by:
 #   - Freetype
-build harfbuzz
+## build harfbuzz
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/freetype2.html
 # Dependencies:
@@ -270,8 +270,8 @@ build harfbuzz
 #   - fontconfig
 #   - php
 #   - ghostscript
-rm -rf ${DEPS}/freetype
-build freetype
+## rm -rf ${DEPS}/freetype
+## build freetype
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/fontconfig.html
 # Dependencies:
@@ -281,8 +281,8 @@ build freetype
 #   - pango
 #   - poppler
 #   - ghostscript
-rm -rf ${DEPS}/fontconfig
-build fontconfig
+## rm -rf ${DEPS}/fontconfig
+## build fontconfig
 
 ########################################################################################################################
 #
@@ -296,7 +296,7 @@ build fontconfig
 #   - Cairo
 # Depended on by:
 #   - libsrvg
-build pango
+## build pango
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/libcroco.html
 # Dependencies:
@@ -304,7 +304,7 @@ build pango
 #   - libxml
 # Depended on by:
 #   - libsrvg
-build croco
+## build croco
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/librsvg.html
 # Dependencies:
@@ -312,7 +312,7 @@ build croco
 #   - croco
 #   - pango
 # Depended on by:
-build svg
+## build svg
 
 # http://www.linuxfromscratch.org/blfs/view/8.0/basicnet/curl.html
 # Dependencies:
@@ -320,7 +320,7 @@ build svg
 # Depended on by:
 #   - poppler
 #   - php
-build curl
+## build curl
 
 # http://www.linuxfromscratch.org/blfs/view/svn/general/openjpeg.html
 # Dependencies:
@@ -329,7 +329,7 @@ build curl
 #   - libtiff
 # Depended on by:
 #   - poppler
-build openjpeg
+## build openjpeg
 
 # http://www.linuxfromscratch.org/blfs/view/cvs/general/poppler.html
 # Dependencies:
@@ -340,7 +340,7 @@ build openjpeg
 #   - openjpeg
 # Depended on by:
 #   - vips
-build poppler
+## build poppler
 
 # http://www.linuxfromscratch.org/blfs/view/cvs/general/poppler.html
 # Dependencies:
@@ -371,7 +371,7 @@ build ghostscript
 #   - ghostscript
 # Depended on by:
 #   - vips
-build imagemagick
+## build imagemagick
 
 
 # https://github.com/jcupitt/libvips
@@ -395,41 +395,29 @@ build imagemagick
 #   - phpvips
 build vips
 
-if [[ "${BUILD_PHP}" == "YES" ]]; then
+# http://www.linuxfromscratch.org/blfs/view/svn/general/php.html
+# Dependencies:
+#   - libxml2
+#   - libxslt
+#   - pcre
+#   - freetype
+#   - libexif
+#   - libjpeg-turbo
+#   - libpng
+#   - libtiff
+#   - curl
+#   - openssl
+# Depended on by:
+#   - phpvips
+build php
 
-
-    # http://www.linuxfromscratch.org/blfs/view/svn/general/php.html
-    # Dependencies:
-    #   - libxml2
-    #   - libxslt
-    #   - pcre
-    #   - freetype
-    #   - libexif
-    #   - libjpeg-turbo
-    #   - libpng
-    #   - libtiff
-    #   - curl
-    #   - openssl
-    # Depended on by:
-    #   - phpvips
-    build php
-
-    # https://github.com/jcupitt/php-vips-ext
-    # Dependencies:
-    #   - vips
-    #   - php
-    # Depended on by:
-    #   - none
-    build phpvips
-
-    #
-    # Dependencies:
-    #   - imagemagick
-    #   - php
-    # Depended on by:
-    #   - none
-    build imagick
-fi
+# https://github.com/jcupitt/php-vips-ext
+# Dependencies:
+#   - vips
+#   - php
+# Depended on by:
+#   - none
+build phpvips
 
 # Remove the old C++ bindings
 cd ${TARGET}/include

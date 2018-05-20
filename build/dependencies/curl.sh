@@ -1,18 +1,28 @@
-#!/bin/sh \
-set -e
+#!/bin/sh
 
-fetchSource curl https://github.com/curl/curl/releases/download/curl-${VERSION_CURL//./_}/curl-${VERSION_CURL}.tar.gz
+fetchSource curl https://github.com/curl/curl/archive/curl-${VERSION_CURL//./_}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_CURL}\""
 
-if [ ! -f "CONFIGURED" ]; then
+if [ ! -f "configured.sts" ]; then
+    printf "\tConfiguring\n"
+    LD_LIBRARY_PATH=${TARGET}/lib \
+        ./buildconf >> ${BUILD_LOGS}/${DEP_NAME}.buildconfig.log 2>&1
+
     LD_LIBRARY_PATH=${TARGET}/lib \
     ./configure \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking
-    touch "CONFIGURED"
+        --disable-dependency-tracking >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
+    touch configured.sts
 else
-    echo "Already Configured"
+    printf "\tAlready Configured\n"
 fi
 
-make install
+if [ ! -f "made.sts" ]; then
+    printf "\tBuilding\n"
+    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    touch made.sts
+else
+	printf "\tAlready Built\n"
+fi

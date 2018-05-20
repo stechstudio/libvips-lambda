@@ -1,18 +1,25 @@
-#!/bin/sh \
-set -e
+#!/bin/sh
 
 fetchSource ffi ftp://sourceware.org/pub/libffi/libffi-${VERSION_FFI}.tar.gz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_FFI}\""
 
-if [ ! -f "Makefile" ]; then
+if [ ! -f "configured.sts" ]; then
+    printf "\tConfiguring\n"
     ./configure \
         --host=${CHOST} \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
         --disable-dependency-tracking \
-        --disable-builddir
+        --disable-builddir >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
+    touch configured.sts
 else
-    echo "Already Configured"
+    printf "\tAlready Configured\n"
 fi
-
-make install-strip
+if [ ! -f "made.sts" ]; then
+    printf "\tBuilding\n"
+    make install-strip    >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    touch made.sts
+else
+	printf "\tAlready Built\n"
+fi

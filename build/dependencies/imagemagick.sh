@@ -1,13 +1,16 @@
 #!/bin/sh
 
-fetchSource xslt http://xmlsoft.org/sources/libxslt-${VERSION_XLST}.tar.gz
-export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_XSLT}\""
+fetchSource imagemagick ftp://ftp.osuosl.org/pub/blfs/conglomeration/ImageMagick/ImageMagick-${VERSION_IMAGEMAGICK}.tar.xz
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_IMAGEMAGIC}\""
 
 if [ ! -f "configured.sts" ]; then
     printf "\tConfiguring\n"
-    ./configure  \
+    ./configure \
         --prefix=${TARGET} \
-        --with-sysroot=${TARGET} \
+        --sysconfdir=${TARGET}/etc \
+        --enable-hdri     \
+        --with-gslib    \
+        --with-rsvg     \
         --disable-static >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
     touch configured.sts
 else

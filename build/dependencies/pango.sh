@@ -1,14 +1,24 @@
 #!/bin/sh
-set -e
 
 fetchSource pango https://download.gnome.org/sources/pango/1.40/pango-${VERSION_PANGO}.tar.xz
-if [ ! -f "Makefile" ]; then
+export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_PANGO}\""
+
+if [ ! -f "configured.sts" ]; then
+    printf "\tConfiguring\n"
     ./configure  \
         --prefix=${TARGET} \
         --enable-shared \
         --disable-static \
-        --disable-dependency-tracking
+        --disable-dependency-tracking >> ${BUILD_LOGS}/${DEP_NAME}.config.log 2>&1
+    touch configured.sts
 else
-    echo "Already Configured"
+    printf "\tAlready Configured\n"
 fi
-make install-strip
+
+if [ ! -f "made.sts" ]; then
+    printf "\tBuilding\n"
+    make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    touch made.sts
+else
+	printf "\tAlready Built\n"
+fi

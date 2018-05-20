@@ -9,4 +9,4 @@ fi
 
 echo "Running ..."
 docker build -t dev-lambda amazonlinux
-docker run --rm -i -t -v $PWD:/packaging -w /packaging/build dev-lambda /bin/bash -i
+docker run --rm -i -t -v $PWD:/packaging -w /packaging/build dev-lambda /bin/bash
