@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#fetchSource ghostscript https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostscript-${VERSION_GHOSTSCRIPT}.tar.gz
+#fetchSource ghostscript https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostscript-${VERSION_GHOSTSCRIPT}.tar.gz
 
 export DEP_NAME=ghostscript
 build_dir=${DEPS}/${DEP_NAME}
