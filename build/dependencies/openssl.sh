@@ -19,8 +19,15 @@ else
 fi
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    curl -o ${TARGET}/etc/ssl/certdata.txt https://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    (
+        # OpenSSL doesn't build reliably with multiple jobs.
+        unset MAKEFLAGS
+        make
+        echo -e "\make install\n"
+        make install
+        curl -o ${TARGET}/etc/ssl/certdata.txt \
+            https://hg.mozilla.org/releases/mozilla-release/raw-file/default/security/nss/lib/ckfw/builtins/certdata.txt
+    ) >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
 	printf "\tAlready Built\n"
