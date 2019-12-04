@@ -23,3 +23,5 @@ export CXXFLAGS="${FLAGS}"
 export LD_LIBRARY_PATH=${TARGET}/lib
 
 export JSON_VERSIONS="\"name\": \"version\""
+
+export MAKEFLAGS="-j $(nproc)"
