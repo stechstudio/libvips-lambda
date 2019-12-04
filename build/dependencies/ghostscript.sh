@@ -1,6 +1,9 @@
 #!/bin/sh
 
-fetchSource ghostscript https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs921/ghostscript-${VERSION_GHOSTSCRIPT}.tar.gz
+fetchSource ghostscript \
+    https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs$(
+    echo "${VERSION_GHOSTSCRIPT}" | tr -d '.'
+    )/ghostscript-${VERSION_GHOSTSCRIPT}.tar.gz
 export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_GHOSTSCRIPT}\""
 
 if [ ! -f "configured.sts" ]; then
