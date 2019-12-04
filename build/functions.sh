@@ -4,32 +4,37 @@
 fetchSource () {
     export DEP_NAME=$1
     url=$2
+    file_name="${CACHE}/${url##*/}"
     build_dir=${DEPS}/${DEP_NAME}
 
     if [ ! -f ${build_dir}/downloaded.sts ]; then
-        printf "\tDownloading to ${build_dir}\n"
         mkdir -p ${build_dir}
 
         case "$url" in
             *.tar.xz)
-                tar_args=xJC
+                tar_arg=J
                 ;;
             *.tar.gz)
-                tar_args=xzC
+                tar_arg=z
                 ;;
             *.tgz)
-                tar_args=xzC
+                tar_arg=z
                 ;;
             *.tar.bz2)
-                tar_args=xjC
+                tar_arg=j
                 ;;
             *)
                 echo "I can only handle .xz, .bz2, or .gz"
                 exit 1
         esac
 
-
-        curl -Ls ${url} | tar ${tar_args} ${build_dir} --strip-components=1
+        if [ ! -f "${file_name}" ]
+        then
+            printf "Downloading ${url}\n"
+            curl -L -s -o "${file_name}" "${url}"
+        fi
+        printf "Extracting to ${build_dir}\n"
+        tar "${tar_arg}xf" "${file_name}" -C ${build_dir} --strip-components=1
         touch ${build_dir}/downloaded.sts
     else
         printf "\tAlready Downloaded\n"
