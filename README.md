@@ -77,7 +77,7 @@ creating your lambda package. Not all operating systems nor zipping programs pro
 In your code you can reference `/var/task/bin/vips` and you will need to ensure you customize the Lambda Function 
 Environment Variables:
 ```bash
-LD_LIBRARY_PATH=${LAMBDA_TASK_ROOT}/lib:LD_LIBRARY_PATH
+LD_LIBRARY_PATH=${LAMBDA_TASK_ROOT}/lib:${LD_LIBRARY_PATH}
 PATH=${LAMBDA_TASK_ROOT}/bin:${LAMBDA_TASK_ROOT}:${PATH}
  ```
 
