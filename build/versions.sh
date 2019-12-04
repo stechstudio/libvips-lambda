@@ -26,7 +26,7 @@ export VERSION_FREETYPE=2.8         # https://sourceforge.net/projects/freetype/
 export VERSION_GDKPIXBUF=2.36.6     # https://github.com/GNOME/gdk-pixbuf/releases
 export VERSION_GIF=5.1.4            # https://sourceforge.net/projects/giflib/files/?source=navbar
 export VERSION_GLIB=2.52.0          # https://github.com/GNOME/glib/releases
-export VERSION_GHOSTSCRIPT=9.21     # http://www.linuxfromscratch.org/blfs/view/cvs/pst/gs.html
+export VERSION_GHOSTSCRIPT=9.50     # http://www.linuxfromscratch.org/blfs/view/cvs/pst/gs.html
 export VERSION_GSF=1.14.41          # https://github.com/GNOME/libgsf/releases
 export VERSION_HARFBUZZ=1.4.5       # https://github.com/behdad/harfbuzz/releases
 export VERSION_ICU=59.1             # http://www.linuxfromscratch.org/blfs/view/svn/general/icu.html
