@@ -72,8 +72,18 @@ packageVips () {
 
     echo "|   ${PACKAGE} "
     echo "-------------------------------------------------------------------------------------------------"
-    [[ -f "${PACKAGE}" ]] && rm "${PACKAGE}"
-    tar czf ${PACKAGE} include lib bin modules etc
+    if [ -f "${PACKAGE}" ]
+    then
+        rm -f "${PACKAGE}"
+    fi
+    tar zcf "${PACKAGE}" include lib bin etc
+
+    # The modules directory only exists if building the PHP modules.
+    if [ "${BUILD_PHP}" = "YES" ]
+    then
+        tar zrf "${PACKAGE}" modules
+    fi
+
     advdef --recompress --shrink-insane ${PACKAGE}
 }
 
