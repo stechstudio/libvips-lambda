@@ -23,15 +23,22 @@ fi
 
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make so   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    make soinstall   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    install -v -m644 base/*.h ${TARGET}/include/ghostscript   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    (
+        # Ghostscript doesn't build reliably with multiple jobs.
+        unset MAKEFLAGS
 
-    mkdir -p ${TARGET}/share/ghostscript
-    curl -Ls http://downloads.sourceforge.net/gs-fonts/ghostscript-fonts-std-8.11.tar.gz | tar xzC ${TARGET}/share/ghostscript   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    curl -Ls http://downloads.sourceforge.net/gs-fonts/gnu-gs-fonts-other-6.0.tar.gz | tar xzC ${TARGET}/share/ghostscript   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    ${TARGET}/bin/fc-cache -v ${TARGET}/share/ghostscript/fonts/   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+        make so
+        make install
+        make soinstall
+        install -v -m644 base/*.h ${TARGET}/include/ghostscript
+
+        mkdir -p ${TARGET}/share/ghostscript
+        curl -Ls http://downloads.sourceforge.net/gs-fonts/ghostscript-fonts-std-8.11.tar.gz | \
+            tar xzC ${TARGET}/share/ghostscript
+        curl -Ls http://downloads.sourceforge.net/gs-fonts/gnu-gs-fonts-other-6.0.tar.gz | \
+            tar xzC ${TARGET}/share/ghostscript
+        ${TARGET}/bin/fc-cache -v ${TARGET}/share/ghostscript/fonts/
+    ) >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
 
     touch made.sts
 else
