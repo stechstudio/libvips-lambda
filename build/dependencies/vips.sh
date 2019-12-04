@@ -1,6 +1,6 @@
 #!/bin/sh
 
-fetchSource vips https://github.com/jcupitt/libvips/releases/download/v${VERSION_VIPS}/vips-${VERSION_VIPS}.tar.gz
+fetchSource vips https://github.com/libvips/libvips/releases/download/v${VERSION_VIPS}/vips-${VERSION_VIPS}.tar.gz
 export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_VIPS}\""
 
 if [ ! -f "patched.sts" ]; then
