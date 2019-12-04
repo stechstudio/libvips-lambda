@@ -1,6 +1,6 @@
 #!/bin/sh
 
-fetchSource pcre ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-${VERSION_PCRE}.tar.bz2
+fetchSource pcre https://downloads.sourceforge.net/project/pcre/pcre/${VERSION_PCRE}/pcre-${VERSION_PCRE}.tar.bz2
 export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_PCRE}\""
 
 if [ ! -f "configured.sts" ]; then
