@@ -17,8 +17,10 @@ else
 fi
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make  >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    make install   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    {
+        make
+        make install
+    } >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
 	printf "\tAlready Built\n"

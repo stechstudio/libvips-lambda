@@ -22,7 +22,10 @@ else
 fi
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make install    >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    {
+        make
+        make install
+    } >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     cp xml2-config ${TARGET}/bin/xml2-config
     touch made.sts
 else
