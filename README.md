@@ -7,7 +7,7 @@ We use libvips for image manipulation, primarily tiling image pyramids for bluep
 
 In the fall of 2016, I had a good chat with [@jcupitt](https://github.com/jcupitt) and [@lovell](https://github.com/lovell) about the issue in [jcupitt/libvips#492](https://github.com/jcupitt/libvips/issues/492) and @lovell pointed out that they were building vips libraries for the Node.js module [Sharp](https://github.com/lovell/sharp). Sharp builds the shared libraries that have a single runtime dependency of `glibc v2.13+` and the latest Amazon Linux is further along than that.
 
-If we were looking for a Node.js solution in AWS Lambda, we could have simply used the sharp module. If you are using Node.js, you should probably stop here and just go use Sharp. However, we required an executable that we could call directly. So I adapted the [sharp vips build tools](https://github.com/lovell/sharp/tree/master/packaging) to allow us to get what we are after, an executable.
+If we were looking for a Node.js solution in AWS Lambda, we could have simply used the sharp module. If you are using Node.js, you should probably stop here and just go use Sharp. However, we required an executable that we could call directly. So I adapted the [sharp libvips packaging scripts](https://github.com/lovell/sharp-libvips) to allow us to get what we are after, an executable.
 
 It really didn't take much once I dug around the Sharp Repository a bit and found how they are building for the latest vips. We are ultimately just adding the `/bin` directory to the resulting archive.
 
