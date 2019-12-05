@@ -1,6 +1,6 @@
 #!/bin/sh
 
-fetchSource fontconfig https://www.freedesktop.org/software/fontconfig/release/fontconfig-${VERSION_FONTCONFIG}.tar.bz2
+fetchSource fontconfig https://www.freedesktop.org/software/fontconfig/release/fontconfig-${VERSION_FONTCONFIG}.tar.gz
 export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_FONTCONFIG}\""
 
 if [ ! -f "configured.sts" ]; then
