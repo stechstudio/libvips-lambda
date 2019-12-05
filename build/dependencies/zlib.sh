@@ -15,7 +15,10 @@ fi
 
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make install    >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    {
+        make
+        make install
+    } >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     rm ${TARGET}/lib/libz.a
     touch made.sts
 else

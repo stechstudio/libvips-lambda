@@ -48,8 +48,10 @@ else
 fi
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
-    make install >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    {
+        make
+        make install
+    } >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     mkdir -p ${TARGET}/etc/php
     cp php.ini-production ${TARGET}/etc/php/php.ini
     touch made.sts

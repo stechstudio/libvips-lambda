@@ -1,6 +1,6 @@
 #!/bin/sh
 
-fetchSource fontconfig https://www.freedesktop.org/software/fontconfig/release/fontconfig-${VERSION_FONTCONFIG}.tar.bz2
+fetchSource fontconfig https://www.freedesktop.org/software/fontconfig/release/fontconfig-${VERSION_FONTCONFIG}.tar.gz
 export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_FONTCONFIG}\""
 
 if [ ! -f "configured.sts" ]; then
@@ -20,7 +20,10 @@ fi
 
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    {
+        make
+        make install-strip
+    } >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     touch made.sts
 else
 	printf "\tAlready Built\n"

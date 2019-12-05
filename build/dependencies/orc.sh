@@ -16,10 +16,13 @@ else
 fi
 if [ ! -f "made.sts" ]; then
     printf "\tBuilding\n"
-    make install-strip   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    {
+        make
+        make install-strip
+    } >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
     cd ${TARGET}/lib
     rm -rf liborc-test-*
-    cd -   >> ${BUILD_LOGS}/${DEP_NAME}.make.log 2>&1
+    cd -
     touch made.sts
 else
 	printf "\tAlready Built\n"
