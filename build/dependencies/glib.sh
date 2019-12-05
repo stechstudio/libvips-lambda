@@ -1,6 +1,9 @@
 #!/bin/sh
 
-fetchSource glib https://download.gnome.org/sources/glib/2.52/glib-${VERSION_GLIB}.tar.xz
+fetchSource glib \
+    https://download.gnome.org/sources/glib/$(
+    echo ${VERSION_GLIB} | cut -d '.' -f 1-2
+    )/glib-${VERSION_GLIB}.tar.xz
 export JSON_VERSIONS="${JSON_VERSIONS}, \"${DEP_NAME}\": \"${VERSION_GLIB}\""
 
 if [ ! -f "configured.sts" ]; then
